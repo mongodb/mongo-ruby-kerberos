@@ -1,0 +1,61 @@
+language: ruby
+
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1
+  - ruby-head
+  - jruby-19mode
+  - jruby-head
+  - rbx-2.2.5
+
+jdk:
+  - oraclejdk7
+  - openjdk7
+  - oraclejdk8
+
+env: CI="travis"
+
+notifications:
+  email: false
+  flowdock: 1da4416b8ff98d1880986472428b1b1b
+
+branches:
+  only:
+    - master
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+  exclude:
+    - rvm: 1.9.3
+      jdk: openjdk7
+      env: CI="travis"
+    - rvm: 1.9.3
+      jdk: oraclejdk8
+      env: CI="travis"
+    - rvm: 2.0.0
+      jdk: openjdk7
+      env: CI="travis"
+    - rvm: 2.0.0
+      jdk: oraclejdk8
+      env: CI="travis"
+    - rvm: 2.1
+      jdk: openjdk7
+      env: CI="travis"
+    - rvm: 2.1
+      jdk: oraclejdk8
+      env: CI="travis"
+    - rvm: ruby-head
+      jdk: openjdk7
+      env: CI="travis"
+    - rvm: ruby-head
+      jdk: oraclejdk8
+      env: CI="travis"
+    - rvm: rbx-2.2.5
+      jdk: openjdk7
+      env: CI="travis"
+    - rvm: rbx-2.2.5
+      jdk: oraclejdk8
+      env: CI="travis"
