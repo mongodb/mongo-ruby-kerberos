@@ -35,19 +35,18 @@ if jruby?
 else
   require "rake/extensiontask"
   Rake::ExtensionTask.new do |ext|
-    ext.name = "native"
+    ext.name = "csasl"
     ext.ext_dir = "ext/mongo/kerberos"
     ext.lib_dir = "lib"
   end
 end
 
-require "mongo/kerberos/version"
+require "mongo/auth/kerberos/version"
 
 def extension
   RUBY_PLATFORM =~ /darwin/ ? "bundle" : "so"
 end
 
-RSpec::Core::RakeTask.new(:spec)
 RSpec::Core::RakeTask.new(:rspec)
 
 if jruby?
@@ -63,8 +62,8 @@ end
 task :clean_all => :clean do
   begin
     Dir.chdir(Pathname(__FILE__).dirname + "lib") do
-      `rm native.#{extension}`
-      `rm native.o`
+      `rm csasl.#{extension}`
+      `rm csasl.o`
       `rm mongo_kerberos.jar`
     end
   rescue Exception => e
@@ -72,8 +71,7 @@ task :clean_all => :clean do
   end
 end
 
-task :ext_spec => :compile do
-  ENV["WITH_EXT"] = "C"
+task :spec => :compile do
   Rake::Task["rspec"].invoke
 end
 
@@ -95,4 +93,4 @@ task :release => :build do
   end
 end
 
-task :default => [ :clean_all, :spec, :ext_spec ]
+task :default => [ :clean_all, :spec ]

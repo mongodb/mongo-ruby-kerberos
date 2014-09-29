@@ -12,4 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'mongo/kerberos/version'
+module Mongo
+  module Auth
+    class Kerberos
+
+      # Gem version.
+      #
+      # @since 2.0.0
+      VERSION = '2.0.0'.freeze
+    end
+  end
+end

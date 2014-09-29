@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-module Mongo
-  module Kerberos
+require 'forwardable'
+require 'mongo'
+require 'mongo/auth/kerberos'
+require 'mongo/auth/kerberos/version'
 
-    # The current version of the gem.
-    #
-    # @since 2.0.0
-    VERSION = '2.0.0'.freeze
-  end
-end
+# Add the Kerberos authentication mechanism.
+#
+# @since 2.0.0
+Mongo::Auth::SOURCES[:gssapi] = Mongo::Auth::Kerberos

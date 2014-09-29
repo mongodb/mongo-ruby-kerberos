@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
+gem 'mongo', :github => 'mongodb/mongo-ruby-driver'
 
 group :development, :test do
   gem 'rspec'
