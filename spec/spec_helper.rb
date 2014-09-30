@@ -24,7 +24,7 @@ if ENV["CI"] && !ENV["WITH_EXT"]
   end
 end
 
-require "mongo_kerberos"
+require "mongo_sasl"
 require "rspec"
 
 # Dir["./spec/support/**/*.rb"].each { |file| require file }

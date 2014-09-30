@@ -1,5 +1,4 @@
-Mongo Kerberos Changelog
+Mongo SASL Changelog
 ==============
 
-## 2.0.0
-
+## 1.0.0

@@ -14,7 +14,7 @@
 
 require 'java'
 require 'jsasl.jar'
-require 'mongo_kerberos.jar'
+require 'mongo/sasl/native.jar'
 
 module Mongo
   module Auth
