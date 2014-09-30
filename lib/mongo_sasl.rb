@@ -14,6 +14,12 @@
 
 require 'forwardable'
 require 'mongo'
+
+if BSON::Environment.jruby?
+  require 'java'
+  require 'mongo/sasl/jsasl.jar'
+end
+
 require 'mongo/auth/kerberos'
 require 'mongo/sasl/version'
 

@@ -19,7 +19,7 @@ perf/profile.rb
 perf/*.pdf
 perf/*.profile
 perf/*.symbols
-*.jar
+native.jar
 TODO
 .rbx/
 gem-private_key.pem
