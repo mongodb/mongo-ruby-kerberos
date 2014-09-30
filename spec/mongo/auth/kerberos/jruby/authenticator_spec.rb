@@ -16,7 +16,7 @@ describe Mongo::Auth::Kerberos::Authenticator do
       authenticator.instance_variable_get(:@wrapped)
     end
 
-    it 'wraps the c extension authenticator', if: BSON::Environment.jruby? do
+    it 'wraps the jruby extension authenticator', if: BSON::Environment.jruby? do
       expect(wrapped).to be_a(org.mongodb.sasl.GSSAPIAuthenticator)
     end
   end
