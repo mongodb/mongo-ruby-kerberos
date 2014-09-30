@@ -5,7 +5,7 @@ describe Mongo::Auth::Kerberos::Authenticator do
   describe '#initialize' do
 
     let(:user) do
-      Mongo::Auth::User.new(username: 'test', password: 'password')
+      Mongo::Auth::User.new(user: 'drivers@LDAPTEST.10GEN.CC', password: 'password')
     end
 
     let(:authenticator) do
