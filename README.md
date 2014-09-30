@@ -1,4 +1,4 @@
-BSON [![Build Status](https://secure.travis-ci.org/mongodb/sasl-ruby.png?branch=master&.png)](http://travis-ci.org/mongodb/sasl-ruby) [![Code Climate](https://codeclimate.com/github/mongodb/sasl-ruby.png)](https://codeclimate.com/github/mongodb/sasl-ruby) [![Coverage Status](https://coveralls.io/repos/mongodb/sasl-ruby/badge.png?branch=master)](https://coveralls.io/r/mongodb/sasl-ruby?branch=master)
+Mongo SASL [![Build Status](https://secure.travis-ci.org/mongodb/sasl-ruby.png?branch=master&.png)](http://travis-ci.org/mongodb/sasl-ruby) [![Code Climate](https://codeclimate.com/github/mongodb/sasl-ruby.png)](https://codeclimate.com/github/mongodb/sasl-ruby) [![Coverage Status](https://coveralls.io/repos/mongodb/sasl-ruby/badge.png?branch=master)](https://coveralls.io/r/mongodb/sasl-ruby?branch=master)
 ====
 
 Provides SASL authentication support to the Mongo Ruby Driver.
