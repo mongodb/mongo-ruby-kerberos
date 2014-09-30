@@ -11,6 +11,10 @@ mongo_sasl is tested against MRI (1.9.2+), JRuby (1.7.0+) and Rubinius (2.0.0+).
 Installation
 ------------
 
+libsasl is a requirement to be able to install the mongo_sasl gem. Please see the
+[Cyrus documentation](http://cyrusimap.web.cmu.edu/docs/cyrus-sasl/2.1.25/) for more
+information.
+
 With bundler, add the `mongo_sasl` gem to your `Gemfile`.
 
 ```ruby
