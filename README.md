@@ -6,7 +6,7 @@ Provides SASL authentication support to the Mongo Ruby Driver. (Kerberos and SCR
 Compatibility
 -------------
 
-mongo_sasl is tested against MRI (1.9.2+), JRuby (1.7.0+) and Rubinius (2.0.0+).
+mongo_sasl is tested against MRI (1.9.2+) and JRuby (1.7.0+)
 
 Installation
 ------------
