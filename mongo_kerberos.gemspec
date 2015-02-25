@@ -5,7 +5,7 @@ require 'mongo/sasl/version'
 Gem::Specification.new do |s|
   s.name              = 'mongo_kerberos'
   s.rubyforge_project = 'mongo_kerberos'
-  s.version           = Mongo::SASL::VERSION
+  s.version           = Mongo::Auth::Kerberos::VERSION
   s.authors           = ['Emily Stolfo', 'Durran Jordan']
   s.email             = ['mongodb-dev@googlegroups.com']
   s.homepage          = 'http://www.mongodb.org'
@@ -26,10 +26,10 @@ Gem::Specification.new do |s|
   unless RUBY_PLATFORM =~ /java/
     s.platform   = Gem::Platform::RUBY
     s.files      += Dir.glob('ext/**/*.{c,h,rb}')
-    s.extensions = ['ext/mongo/sasl/extconf.rb']
+    s.extensions = ['ext/mongo/kerberos/extconf.rb']
   else
     s.platform   = 'java'
-    s.files      << 'ext/mongo/sasl/jsasl.jar'
+    s.files      << 'ext/mongo/kerberos/jsasl.jar'
   end
 
   s.test_files = Dir.glob('spec/**/*')

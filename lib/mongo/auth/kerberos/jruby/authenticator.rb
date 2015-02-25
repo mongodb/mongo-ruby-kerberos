@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'mongo/sasl/native.jar'
+require 'mongo/kerberos/native.jar'
 
 module Mongo
   module Auth

@@ -1,4 +1,4 @@
-# Copyright (C) 2014 MongoDB, Inc.
+# Copyright (C) 2014-2015 MongoDB, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# @note If we are running under MRI or JRuby we need to determine the
-# appropriate authentication wrapper to include.
-if BSON::Environment.jruby?
-  require 'mongo/auth/kerberos/jruby/authenticator'
-else
-  require 'mongo/auth/kerberos/mri/authenticator'
-end
+require 'mongo/auth/kerberos/conversation'
+require 'mongo/auth/kerberos/version'
 
 module Mongo
   module Auth
@@ -46,38 +41,12 @@ module Mongo
       #
       # @since 2.0.0
       def login(connection)
-        host = connection.address.host
-        token = BSON::Binary.new(authenticator(host).initialize_challenge)
-        reply = connection.dispatch([ login_message(token) ]).documents[0]
-        until reply.documents[0]['done']
-          token = BSON::Binary.new(authenticator(host).evaluate_challenge(response['payload'].to_s))
-          reply = connection.dispatch([ continue_message(response, token) ])
+        conversation = Conversation.new(user, connection.address.host)
+        reply = connection.dispatch([ conversation.start ])
+        until reply.documents[0][Conversation::DONE]
+          reply = connection.dispatch([ conversation.finalize(reply) ])
         end
         reply
-      end
-
-      private
-
-      def authenticator(host)
-        @authenticator ||= Authenticator.new(user, host)
-      end
-
-      def login_message(token)
-        Protocol::Query.new(
-          Auth::EXTERNAL,
-          Database::COMMAND,
-          { saslStart: 1, payload: token, mechanism: MECHANISM, authAuthorize: 1 },
-          limit: -1
-        )
-      end
-
-      def continue_message(response, token)
-        Protocol::Query.new(
-          Auth::EXTERNAL,
-          Database::COMMAND,
-          { saslContinue: 1, payload: token, conversationId: response['conversationId'] },
-          limit: -1
-        )
       end
     end
   end
