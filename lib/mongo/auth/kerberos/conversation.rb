@@ -43,16 +43,24 @@ module Mongo
         # @since 2.0.0
         ID = 'conversationId'.freeze
 
+        # The payload field.
+        #
+        # @since 2.0.0
+        PAYLOAD = 'payload'.freeze
+
         # The base client first message.
         #
         # @since 2.0.0
-        START_MESSAGE = { saslStart: 1, authAuthorize: 1 }.freeze
+        START_MESSAGE = { saslStart: 1, autoAuthorize: 1 }.freeze
 
         # @return [ Protocol::Reply ] reply The current reply in the conversation.
         attr_reader :reply
 
         # @return [ Authenticator ] authenticator The native SASL authenticator.
         attr_reader :authenticator
+
+        # @return [ Mongo::Auth::User ] user The user to authenticate.
+        attr_reader :user
 
         # Finalize the conversation.
         #
@@ -113,21 +121,24 @@ module Mongo
         #
         # @since 2.0.0
         def initialize(user, host)
+          @user = user
           @authenticator = Authenticator.new(user, host)
         end
 
         private
 
         def start_token
-          BSON::Binary.new(authenticator.initialize_challenge)
+          authenticator.initialize_challenge
         end
 
         def continue_token
-          BSON::Binary.new(authenticator.evaluate_challenge(reply.documents[0]['payload'].to_s))
+          authenticator.evaluate_challenge(reply.documents[0][PAYLOAD])
         end
 
         def validate!(reply)
-          raise Unauthorized.new(user) unless reply.documents[0]['ok'] == 1
+          unless reply.documents[0][Operation::Result::OK] == 1
+            raise Unauthorized.new(user)
+          end
           @reply = reply
         end
       end

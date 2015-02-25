@@ -40,8 +40,8 @@ module Mongo
           @wrapped = GSSAPIAuthenticator.new(
             user.name,
             host,
-            user.auth_mech_properties[:service_name],
-            user.auth_mech_properties[:canonicalize_host_name]
+            user.auth_mech_properties[:service_name] || 'mongodb',
+            user.auth_mech_properties[:canonicalize_host_name] || false
           )
         end
       end
