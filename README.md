@@ -1,12 +1,12 @@
-Mongo SASL [![Build Status](https://secure.travis-ci.org/mongodb/sasl-ruby.png?branch=master&.png)](http://travis-ci.org/mongodb/sasl-ruby) [![Code Climate](https://codeclimate.com/github/mongodb/sasl-ruby.png)](https://codeclimate.com/github/mongodb/sasl-ruby) [![Coverage Status](https://coveralls.io/repos/mongodb/sasl-ruby/badge.png?branch=master)](https://coveralls.io/r/mongodb/sasl-ruby?branch=master)
+Mongo Kerberos [![Build Status](https://secure.travis-ci.org/mongodb/mongo-kerberos.png?branch=master&.png)](http://travis-ci.org/mongodb/mongo-kerberos) [![Code Climate](https://codeclimate.com/github/mongodb/mongo-kerberos.png)](https://codeclimate.com/github/mongodb/mongo-kerberos) [![Coverage Status](https://coveralls.io/repos/mongodb/mongo-kerberos/badge.png?branch=master)](https://coveralls.io/r/mongodb/mongo-kerberos?branch=master)
 ====
 
-Provides SASL authentication support to the Mongo Ruby Driver. (Kerberos and SCRAM)
+Provides Kerberos authentication support to the Mongo Ruby Driver.
 
 Compatibility
 -------------
 
-mongo_sasl is tested against MRI (1.9.2+) and JRuby (1.7.0+)
+mongo_kerberos is tested against MRI (1.9.2+) and JRuby (1.7.0+)
 
 Installation
 ------------
@@ -18,13 +18,13 @@ information.
 With bundler, add the `mongo_sasl` gem to your `Gemfile`.
 
 ```ruby
-gem "mongo_sasl", "~> 1.0"
+gem "mongo_kerberos", "~> 2.0"
 ```
 
-Require the `mongo_sasl` gem in your application.
+Require the `mongo_kerberos` gem in your application.
 
 ```ruby
-require "mongo_sasl"
+require "mongo_kerberos"
 ```
 
 Usage
@@ -34,10 +34,10 @@ Usage
 API Documentation
 -----------------
 
-The [API Documentation](http://rdoc.info/github/mongodb/sasl-ruby/master/frames) is
+The [API Documentation](http://rdoc.info/github/mongodb/mongo-kerberos/master/frames) is
 located at rdoc.info.
 
 Versioning
 ----------
 
-As of 1.0.0, this project adheres to the [Semantic Versioning Specification](http://semver.org/).
+As of 2.0.0, this project adheres to the [Semantic Versioning Specification](http://semver.org/).
