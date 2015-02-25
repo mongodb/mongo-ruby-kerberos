@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'mongo/kerberos/native.jar'
+require 'java'
+require 'mongo/kerberos/jsasl.jar'
 
 module Mongo
   module Auth
