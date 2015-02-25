@@ -3,14 +3,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'mongo/sasl/version'
 
 Gem::Specification.new do |s|
-  s.name              = 'mongo_sasl'
-  s.rubyforge_project = 'mongo_sasl'
+  s.name              = 'mongo_kerberos'
+  s.rubyforge_project = 'mongo_kerberos'
   s.version           = Mongo::SASL::VERSION
   s.authors           = ['Emily Stolfo', 'Durran Jordan']
   s.email             = ['mongodb-dev@googlegroups.com']
   s.homepage          = 'http://www.mongodb.org'
-  s.summary           = 'SASL authentication support for the MongoDB Ruby driver'
-  s.description       = 'Adds SASL authentication via libsasl to the MongoDB Ruby Driver on MRI and JRuby'
+  s.summary           = 'Kerberos authentication support for the MongoDB Ruby driver'
+  s.description       = 'Adds Kerberos authentication via libsasl to the MongoDB Ruby Driver on MRI and JRuby'
   s.license           = 'Apache License Version 2.0'
 
   if File.exists?('gem-private_key.pem')
@@ -38,5 +38,5 @@ Gem::Specification.new do |s|
   s.required_ruby_version     = '>= 1.9.3'
   s.required_rubygems_version = '>= 1.3.6'
   s.has_rdoc                  = 'yard'
-  s.add_dependency('mongo', "~> 2.0")
+  s.add_dependency('mongo', "~> 2.0.0.beta")
 end
