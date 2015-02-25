@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'mongo', :github => 'mongodb/mongo-ruby-driver'
+gemspec
 
 group :development, :test do
   gem 'rspec'
@@ -18,12 +18,5 @@ group :development, :test do
     gem 'rb-fsevent', :require => false # OS X
     gem 'rb-fchange', :require => false # Windows
     gem 'terminal-notifier-guard'
-  end
-
-  platforms :rbx do
-    gem 'racc'
-    gem 'rubysl', '~> 2.0'
-    gem 'psych'
-    gem 'rubinius-coverage', github: 'rubinius/rubinius-coverage'
   end
 end
