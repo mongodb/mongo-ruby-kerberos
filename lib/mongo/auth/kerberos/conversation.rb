@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# @note If we are running under MRI or JRuby we need to determine the
-# appropriate authentication wrapper to include.
 if BSON::Environment.jruby?
   require 'mongo/auth/kerberos/jruby/authenticator'
 else
@@ -48,7 +46,7 @@ module Mongo
         # The base client first message.
         #
         # @since 2.0.0
-        START_MESSAGE = { saslStart: 1, mechanism: Kerberos::MECHANISM, authAuthorize: 1 }.freeze
+        START_MESSAGE = { saslStart: 1, authAuthorize: 1 }.freeze
 
         # @return [ Protocol::Reply ] reply The current reply in the conversation.
         attr_reader :reply
@@ -88,7 +86,7 @@ module Mongo
           Protocol::Query.new(
             Auth::EXTERNAL,
             Database::COMMAND,
-            START_MESSAGE.merge(payload: start_token),
+            START_MESSAGE.merge(mechanism: Kerberos::MECHANISM, payload: start_token),
             limit: -1
           )
         end
@@ -116,8 +114,6 @@ module Mongo
         # @since 2.0.0
         def initialize(user, host)
           @authenticator = Authenticator.new(user, host)
-        end
-
         end
 
         private

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gemspec
+gem 'mongo', '~> 2.0.0.beta'
 
 group :development, :test do
   gem 'rspec'

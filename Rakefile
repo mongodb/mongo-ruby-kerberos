@@ -30,18 +30,18 @@ if jruby?
   Rake::JavaExtensionTask.new do |ext|
     ext.name = "native"
     ext.ext_dir = "src"
-    ext.lib_dir = "lib/mongo/sasl"
+    ext.lib_dir = "lib/mongo/auth/kerberos"
   end
 else
   require "rake/extensiontask"
   Rake::ExtensionTask.new do |ext|
     ext.name = "native"
-    ext.ext_dir = "ext/mongo/sasl"
-    ext.lib_dir = "lib/mongo/sasl"
+    ext.ext_dir = "ext/mongo/kerberos"
+    ext.lib_dir = "lib/mongo/auth/kerberos"
   end
 end
 
-require "mongo/sasl/version"
+require "mongo/auth/kerberos/version"
 
 def extension
   RUBY_PLATFORM =~ /darwin/ ? "bundle" : "so"
@@ -51,20 +51,20 @@ RSpec::Core::RakeTask.new(:rspec)
 
 if jruby?
   task :build => [ :clean_all, :compile ] do
-    system "gem build mongo_sasl.gemspec"
+    system "gem build mongo_kerberos.gemspec"
   end
 else
   task :build => :clean_all do
-    system "gem build mongo_sasl.gemspec"
+    system "gem build mongo_kerberos.gemspec"
   end
 end
 
 task :clean_all => :clean do
   begin
     Dir.chdir(Pathname(__FILE__).dirname + "lib") do
-      `rm csasl.#{extension}`
-      `rm csasl.o`
-      `rm mongo_sasl.jar`
+      `rm native.#{extension}`
+      `rm native.o`
+      `rm native.jar`
     end
   rescue Exception => e
     puts e.message
@@ -77,19 +77,19 @@ end
 
 # Run bundle exec rake release with mri and jruby. Ex:
 #
-# rvm use 2.1.0@mongo_sasl
+# rvm use 2.1.0@mongo_kerberos
 # bundle exec rake release
-# rvm use jruby@mongo_sasl
+# rvm use jruby@mongo_kerberos
 # bundle exec rake release
 task :release => :build do
-  system "git tag -a v#{Mongo::SASL::VERSION} -m 'Tagging release: #{Mongo::SASL::VERSION}'"
+  system "git tag -a #{Mongo::Auth::Kerberos::VERSION} -m 'Tagging release: #{Mongo::Auth::Kerberos::VERSION}'"
   system "git push --tags"
   if jruby?
-    system "gem push mongo_sasl-#{Mongo::SASL::VERSION}-java.gem"
-    system "rm mongo_sasl-#{Mongo::SASL::VERSION}-java.gem"
+    system "gem push mongo_kerberos-#{Mongo::Auth::Kerberos::VERSION}-java.gem"
+    system "rm mongo_kerberos-#{Mongo::Auth::Kerberos::VERSION}-java.gem"
   else
-    system "gem push mongo_sasl-#{Mongo::SASL::VERSION}.gem"
-    system "rm mongo_sasl-#{Mongo::SASL::VERSION}.gem"
+    system "gem push mongo_kerberos-#{Mongo::Auth::Kerberos::VERSION}.gem"
+    system "rm mongo_kerberos-#{Mongo::Auth::Kerberos::VERSION}.gem"
   end
 end
 

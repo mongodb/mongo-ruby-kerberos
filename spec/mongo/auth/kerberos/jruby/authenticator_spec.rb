@@ -5,7 +5,14 @@ describe Mongo::Auth::Kerberos::Authenticator do
   describe '#initialize' do
 
     let(:user) do
-      Mongo::Auth::User.new(user: 'test', password: 'password')
+      Mongo::Auth::User.new({
+        user: 'test',
+        password: 'password',
+        auth_mech_properties: {
+          service_name: 'mongodb',
+          canonicalize_host_name: true
+        }
+      })
     end
 
     let(:authenticator) do

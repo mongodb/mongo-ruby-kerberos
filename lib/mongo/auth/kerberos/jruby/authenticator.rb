@@ -13,7 +13,8 @@
 # limitations under the License.
 
 require 'java'
-require 'mongo/kerberos/jsasl.jar'
+require 'mongo/auth/kerberos/jsasl.jar'
+require 'mongo/auth/kerberos/native.jar'
 
 module Mongo
   module Auth
@@ -42,8 +43,8 @@ module Mongo
             JRuby.runtime,
             user.name,
             host,
-            user.gssapi_service_name,
-            user.canonicalize_host_name
+            user.auth_mech_properties[:service_name],
+            user.auth_mech_properties[:canonicalize_host_name]
           )
         end
       end
