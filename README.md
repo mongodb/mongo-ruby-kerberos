@@ -1,4 +1,4 @@
-Mongo Kerberos [![Build Status](https://secure.travis-ci.org/mongodb/mongo-kerberos.png?branch=master&.png)](http://travis-ci.org/mongodb/mongo-kerberos) [![Code Climate](https://codeclimate.com/github/mongodb/mongo-kerberos.png)](https://codeclimate.com/github/mongodb/mongo-kerberos) [![Coverage Status](https://coveralls.io/repos/mongodb/mongo-kerberos/badge.png?branch=master)](https://coveralls.io/r/mongodb/mongo-kerberos?branch=master)
+Mongo Kerberos [![Build Status](https://secure.travis-ci.org/mongodb/mongo-ruby-kerberos.png?branch=master&.png)](http://travis-ci.org/mongodb/mongo-ruby-kerberos) [![Code Climate](https://codeclimate.com/github/mongodb/mongo-ruby-kerberos.png)](https://codeclimate.com/github/mongodb/mongo-ruby-kerberos) [![Coverage Status](https://coveralls.io/repos/mongodb/mongo-ruby-kerberos/badge.png?branch=master)](https://coveralls.io/r/mongodb/mongo-ruby-kerberos?branch=master)
 ====
 
 Provides Kerberos authentication support to the Mongo Ruby Driver.
@@ -34,7 +34,7 @@ Usage
 API Documentation
 -----------------
 
-The [API Documentation](http://rdoc.info/github/mongodb/mongo-kerberos/master/frames) is
+The [API Documentation](http://rdoc.info/github/mongodb/mongo-ruby-kerberos/master/frames) is
 located at rdoc.info.
 
 Versioning
