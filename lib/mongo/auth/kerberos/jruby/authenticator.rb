@@ -39,7 +39,7 @@ module Mongo
         #
         # @since 2.0.0
         def initialize(user, host)
-          org.mongodb.sasl.GSSAPIAuthenticator.new(
+          @wrapped = org.mongodb.sasl.GSSAPIAuthenticator.new(
             JRuby.runtime,
             user.name,
             host,

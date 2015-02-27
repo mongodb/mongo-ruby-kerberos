@@ -127,12 +127,25 @@ module Mongo
 
         private
 
-        def start_token
-          authenticator.initialize_challenge
-        end
+        if BSON::Environment.jruby?
 
-        def continue_token
-          authenticator.evaluate_challenge(reply.documents[0][PAYLOAD])
+          def start_token
+            BSON::Binary.new(authenticator.initialize_challenge)
+          end
+
+          def continue_token
+            payload = reply.documents[0][PAYLOAD]
+            BSON::Binary.new(authenticator.evaluate_challenge(payload.data))
+          end
+        else
+
+          def start_token
+            authenticator.initialize_challenge
+          end
+
+          def continue_token
+            authenticator.evaluate_challenge(reply.documents[0][PAYLOAD])
+          end
         end
 
         def validate!(reply)
