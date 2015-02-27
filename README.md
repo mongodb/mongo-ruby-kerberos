@@ -15,7 +15,7 @@ libsasl is a requirement to be able to install the mongo_sasl gem. Please see th
 [Cyrus documentation](http://cyrusimap.web.cmu.edu/docs/cyrus-sasl/2.1.25/) for more
 information.
 
-With bundler, add the `mongo_sasl` gem to your `Gemfile`.
+With bundler, add the `mongo_kerberos` gem to your `Gemfile`.
 
 ```ruby
 gem "mongo_kerberos", "~> 2.0"
