@@ -11,7 +11,7 @@ mongo_kerberos is tested against MRI (1.9.2+) and JRuby (1.7.0+)
 Installation
 ------------
 
-libsasl is a requirement to be able to install the mongo_sasl gem. Please see the
+libsasl is a requirement to be able to install the mongo_kerberos gem. Please see the
 [Cyrus documentation](http://cyrusimap.web.cmu.edu/docs/cyrus-sasl/2.1.25/) for more
 information.
 

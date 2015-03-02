@@ -25,3 +25,5 @@ TODO
 gem-private_key.pem
 *.keytab
 *.config
+.ruby-version
+.ruby-gemset
