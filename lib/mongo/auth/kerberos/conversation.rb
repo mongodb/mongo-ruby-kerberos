@@ -114,7 +114,7 @@ module Mongo
         # Create the new conversation.
         #
         # @example Create the new coversation.
-        #   Conversation.new(user)
+        #   Conversation.new(user, 'test.example.com')
         #
         # @param [ Auth::User ] user The user to converse about.
         # @param [ String ] host The host to talk to.
