@@ -22,9 +22,8 @@ module Mongo
     #
     # @since 2.0.0
     class Kerberos
-      include Executable
 
-      # The authentication mechinism string.
+      # The authentication mechanism string.
       #
       # @since 2.0.0
       MECHANISM = 'GSSAPI'.freeze

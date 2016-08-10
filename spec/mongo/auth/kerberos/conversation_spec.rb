@@ -20,6 +20,17 @@ describe Mongo::Auth::Kerberos::Conversation do
       and_return(authenticator)
   end
 
+  context 'when the user has a realm', if: RUBY_PLATFORM == 'java' do
+
+    let(:user) do
+      Mongo::Auth::User.new(user: 'user1@MYREALM.ME')
+    end
+
+    it 'includes the realm in the username as it was provided' do
+      expect(conversation.user.name).to eq(user.name)
+    end
+  end
+
   describe '#start' do
 
     let(:query) do
