@@ -38,5 +38,5 @@ Gem::Specification.new do |s|
   s.required_ruby_version     = '>= 1.9.3'
   s.required_rubygems_version = '>= 1.3.6'
   s.has_rdoc                  = 'yard'
-  s.add_dependency('mongo', "~> 2.0.0")
+  s.add_dependency('mongo', "~> 2.5.0")
 end

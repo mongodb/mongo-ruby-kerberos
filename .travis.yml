@@ -1,24 +1,25 @@
 language: ruby
 
+sudo: false
+
+before_install:
+  - gem update --system
+  - gem update bundler
+
+install: ruby -S bundle install --without release development
+
+before_script:
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
+  - tar -xvf /tmp/mongodb.tgz
+  - mkdir /tmp/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 --auth &> /dev/null &
+
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.5
-  - 2.2.0
+  - 1.9
+  - 2.4
+  - 2.5
   - ruby-head
-  - jruby-19mode
-  - jruby-head
-
-jdk:
-  - oraclejdk7
-  - openjdk7
-  - oraclejdk8
-
-env: CI="travis"
-
-notifications:
-  email: false
-  flowdock: 1da4416b8ff98d1880986472428b1b1b
+  - jruby-9.1
 
 branches:
   only:
@@ -29,33 +30,27 @@ matrix:
     - rvm: ruby-head
     - rvm: jruby-head
   exclude:
-    - rvm: 1.9.3
-      jdk: openjdk7
-      env: CI="travis"
-    - rvm: 1.9.3
-      jdk: oraclejdk8
-      env: CI="travis"
-    - rvm: 2.0.0
-      jdk: openjdk7
-      env: CI="travis"
-    - rvm: 2.0.0
-      jdk: oraclejdk8
-      env: CI="travis"
-    - rvm: 2.1.5
-      jdk: openjdk7
-      env: CI="travis"
-    - rvm: 2.1.5
-      jdk: oraclejdk8
-      env: CI="travis"
-    - rvm: 2.2.0
-      jdk: openjdk7
-      env: CI="travis"
-    - rvm: 2.2.0
-      jdk: oraclejdk8
-      env: CI="travis"
-    - rvm: ruby-head
-      jdk: openjdk7
-      env: CI="travis"
-    - rvm: ruby-head
-      jdk: oraclejdk8
-      env: CI="travis"
+    - rvm: jruby-9.1
+      env: MONGODB=2.6
+    - rvm: jruby-9.1
+      env: MONGODB=3.0
+    - rvm: jruby-9.1
+      env: MONGODB=3.2
+    - rvm: jruby-9.1
+      env: MONGODB=3.4
+
+env:
+  global:
+    - CI="travis"
+    - JRUBY_OPTS="--server -J-Xms512m -J-Xmx1024m"
+  matrix:
+    - MONGODB=2.6.12
+    - MONGODB=3.0.15
+    - MONGODB=3.2.19
+    - MONGODB=3.4.14
+    - MONGODB=3.6.4
+
+notifications:
+  email: false
+
+

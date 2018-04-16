@@ -13,7 +13,7 @@ group :development, :test do
   else
     gem 'ruby-prof', :platforms => :mri
     gem 'pry'
-    gem 'guard-rspec', :platforms => [ :ruby_19, :ruby_20, :ruby_21 ]
+    gem 'guard-rspec', :platforms => [ :ruby_19, :ruby_24, :ruby_25 ]
     gem 'rb-inotify', :require => false # Linux
     gem 'rb-fsevent', :require => false # OS X
     gem 'rb-fchange', :require => false # Windows
