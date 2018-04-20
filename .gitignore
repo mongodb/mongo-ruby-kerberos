@@ -19,6 +19,7 @@ perf/profile.rb
 perf/*.pdf
 perf/*.profile
 perf/*.symbols
+native.so
 native.jar
 TODO
 .rbx/
