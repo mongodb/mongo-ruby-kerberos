@@ -2,17 +2,7 @@ language: ruby
 
 sudo: false
 
-before_install:
-  - gem update --system
-  - gem update bundler
-
 install: ruby -S bundle install --without release development
-
-before_script:
-  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
-  - tar -xvf /tmp/mongodb.tgz
-  - mkdir /tmp/data
-  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 --auth &> /dev/null &
 
 rvm:
   - 1.9
@@ -29,26 +19,11 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - rvm: jruby-head
-  exclude:
-    - rvm: jruby-9.1
-      env: MONGODB=2.6
-    - rvm: jruby-9.1
-      env: MONGODB=3.0
-    - rvm: jruby-9.1
-      env: MONGODB=3.2
-    - rvm: jruby-9.1
-      env: MONGODB=3.4
 
 env:
   global:
     - CI="travis"
     - JRUBY_OPTS="--server -J-Xms512m -J-Xmx1024m"
-  matrix:
-    - MONGODB=2.6.12
-    - MONGODB=3.0.15
-    - MONGODB=3.2.19
-    - MONGODB=3.4.14
-    - MONGODB=3.6.4
 
 notifications:
   email: false
