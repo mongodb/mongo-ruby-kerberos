@@ -155,7 +155,7 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
 
 VALUE c_GSSAPI_authenticator;
 
-void Init_native() {
+void Init_mongo_kerberos_native() {
   VALUE mongo, auth;
   mongo = rb_const_get(rb_cObject, rb_intern("Mongo"));
   auth = rb_const_get(mongo, rb_intern("Auth"));

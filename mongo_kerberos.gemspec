@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   unless RUBY_PLATFORM =~ /java/
     s.platform   = Gem::Platform::RUBY
     s.files      += Dir.glob('ext/**/*.{c,h,rb}')
-    s.extensions = ['ext/mongo/kerberos/extconf.rb']
+    s.extensions = ['ext/mongo_kerberos/extconf.rb']
   else
     s.platform   = 'java'
     s.files      << 'lib/mongo/auth/kerberos/jsasl.jar'
