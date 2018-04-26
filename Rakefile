@@ -35,9 +35,9 @@ if jruby?
 else
   require "rake/extensiontask"
   Rake::ExtensionTask.new do |ext|
-    ext.name = "native"
-    ext.ext_dir = "ext/mongo/kerberos"
-    ext.lib_dir = "lib/mongo/auth/kerberos"
+    ext.name = "mongo_kerberos_native"
+    ext.ext_dir = "ext/mongo_kerberos"
+    ext.lib_dir = "lib"
   end
 end
 
@@ -62,9 +62,11 @@ end
 task :clean_all => :clean do
   begin
     Dir.chdir(Pathname(__FILE__).dirname + "lib") do
-      `rm native.#{extension}`
-      `rm native.o`
-      `rm native.jar`
+      [extension, ".o", ".jar"].each do |e|
+        Dir.glob(File.join("**", "*.#{e}")).each do |f|
+          `rm #{f}`
+        end
+      end
     end
   rescue Exception => e
     puts e.message
