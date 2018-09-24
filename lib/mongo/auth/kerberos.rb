@@ -28,6 +28,18 @@ module Mongo
       # @since 2.0.0
       MECHANISM = 'GSSAPI'.freeze
 
+      # Instantiate a new authenticator.
+      #
+      # example Create the authenticator.
+      #   Mongo::Auth::Kerberos.new(user)
+      #
+      # @param [ Mongo::Auth::User ] user The user to authenticate.
+      #
+      # @since 2.0.1
+      def initialize(user)
+        @user = user
+      end
+
       # Log the user in on the given connection.
       #
       # @example Log the user in.
@@ -40,7 +52,7 @@ module Mongo
       #
       # @since 2.0.0
       def login(connection)
-        conversation = Conversation.new(user, connection.address.host)
+        conversation = Conversation.new(@user, connection.address.host)
         reply = connection.dispatch([ conversation.start ])
         until reply.documents[0][Conversation::DONE]
           reply = connection.dispatch([ conversation.finalize(reply) ])

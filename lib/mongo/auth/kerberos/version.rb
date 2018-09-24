@@ -17,7 +17,7 @@ module Mongo
     class Kerberos
 
       # The gem version number.
-      VERSION = '2.0.0'.freeze
+      VERSION = '2.0.1'.freeze
     end
   end
 end
