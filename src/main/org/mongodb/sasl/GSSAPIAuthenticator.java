@@ -99,6 +99,7 @@ public class GSSAPIAuthenticator {
 
     private SaslClient createSaslClient() {
         try {
+            System.setProperty("sun.security.jgss.native", "true");
             Map<String, Object> props = new HashMap<String, Object>();
             props.put(Sasl.CREDENTIALS, getGSSCredential(userName));
             SaslClient saslClient = Sasl.createSaslClient(new String[]{GSSAPI_MECHANISM_NAME}, userName,
