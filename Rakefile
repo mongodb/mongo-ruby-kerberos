@@ -62,8 +62,8 @@ end
 task :clean_all => :clean do
   begin
     Dir.chdir(Pathname(__FILE__).dirname + "lib") do
-      [extension, ".o", ".jar"].each do |e|
-        Dir.glob(File.join("**", "*.#{e}")).each do |f|
+      ["o", extension, "jar"].each do |e|
+         Dir.glob(File.join("**", "*.#{e}")).each do |f|
           `rm #{f}`
         end
       end

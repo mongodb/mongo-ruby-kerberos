@@ -13,7 +13,6 @@
 # limitations under the License.
 
 require 'java'
-require 'mongo/auth/kerberos/jsasl.jar'
 require 'mongo/auth/kerberos/native.jar'
 
 module Mongo
