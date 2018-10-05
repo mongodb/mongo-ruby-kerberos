@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
     s.extensions = ['ext/mongo_kerberos/extconf.rb']
   else
     s.platform   = 'java'
-    s.files      << 'lib/mongo/auth/kerberos/jsasl.jar'
+    s.files      << 'lib/mongo/auth/kerberos/native.jar'
   end
 
   s.test_files = Dir.glob('spec/**/*')

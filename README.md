@@ -27,8 +27,13 @@ Require the `mongo_kerberos` gem in your application.
 require "mongo_kerberos"
 ```
 
-Usage
+Note about JRuby
 -----
+
+In order to work with Kerberos TGTs that are in the system cache (e.g. obtained with `kinit`), the
+JRuby extension sets the JVM system property "sun.security.jgss.native" to "true". Note that any
+other use of the JGSS library will also be affected by this setting, meaning that any TGTs in the
+system cache will be available for obtaining Kerberos credentials as well.
 
 
 API Documentation
