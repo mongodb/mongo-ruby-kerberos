@@ -6,10 +6,10 @@ install: ruby -S bundle install --without release development
 
 rvm:
   - 1.9
-  - 2.4
   - 2.5
   - ruby-head
   - jruby-9.1
+  - jruby-9.2
 
 branches:
   only:
@@ -18,7 +18,6 @@ branches:
 matrix:
   allow_failures:
     - rvm: ruby-head
-    - rvm: jruby-head
 
 env:
   global:
