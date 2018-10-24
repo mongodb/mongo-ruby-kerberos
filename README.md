@@ -18,7 +18,7 @@ information.
 With bundler, add the `mongo_kerberos` gem to your `Gemfile`.
 
 ```ruby
-gem "mongo_kerberos", "~> 2.0"
+gem "mongo_kerberos", "~> 2.1"
 ```
 
 Require the `mongo_kerberos` gem in your application.
@@ -45,4 +45,5 @@ located at rdoc.info.
 Versioning
 ----------
 
-As of 2.0.0, this project adheres to the [Semantic Versioning Specification](http://semver.org/).
+As of 2.1.0, this project adheres to the
+[Semantic Versioning Specification](http://semver.org/).
