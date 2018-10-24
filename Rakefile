@@ -96,3 +96,15 @@ task :release => :build do
 end
 
 task :default => [ :clean_all, :spec ]
+
+desc "Generate all documentation"
+task :docs => 'docs:yard'
+
+namespace :docs do
+  desc "Generate yard documention"
+  task :yard do
+    out = File.join('yard-docs', Mongo::Auth::Kerberos::VERSION)
+    FileUtils.rm_rf(out)
+    system "yardoc -o #{out} --title mongo-ruby-kerberos-#{Mongo::Auth::Kerberos::VERSION}"
+  end
+end
