@@ -20,6 +20,11 @@ static void mongo_sasl_conn_free(void* data) {
   sasl_conn_t *conn = (sasl_conn_t*) data;
   if (conn) {
     sasl_dispose(&conn);
+    /* We do not set connection to NULL in the Ruby object. */
+    /* This is probably fine because this method is supposed to be called */
+    /* when the Ruby object is being garbage collected. */
+    /* Plus, we don't have the Ruby object reference here to do anything */
+    /* with it. */
   }
 }
 
@@ -105,6 +110,9 @@ static VALUE initialize_challenge(VALUE self) {
   }
 
   context = Data_Wrap_Struct(rb_cObject, NULL, mongo_sasl_conn_free, conn);
+  /* I'm guessing ruby raises on out of memory condition rather than */
+  /* returns NULL, hence no error checking is needed here? */
+  
   /* from now on context owns conn */
   /* since mongo_sasl_conn_free cleans up conn, we should NOT call */
   /* sasl_dispose any more in this function. */
