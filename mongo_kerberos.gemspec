@@ -5,7 +5,7 @@ require 'mongo/auth/kerberos/version'
 Gem::Specification.new do |s|
   s.name              = 'mongo_kerberos'
   s.rubyforge_project = 'mongo_kerberos'
-  s.version           = Mongo::Auth::Kerberos::VERSION
+  s.version           = Mongo::Auth::Kerberos::VERSION.dup
   s.authors           = ['Emily Stolfo', 'Durran Jordan']
   s.email             = ['mongodb-dev@googlegroups.com']
   s.homepage          = 'http://www.mongodb.org'
