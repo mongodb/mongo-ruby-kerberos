@@ -18,8 +18,9 @@
 
 static void mongo_sasl_conn_free(void* data) {
   sasl_conn_t *conn = (sasl_conn_t*) data;
-  // Ideally we would use sasl_client_done() but that's only available as of cyrus sasl 2.1.25
-  if(conn) sasl_done();
+  if (conn) {
+    sasl_dispose(&conn);
+  }
 }
 
 static sasl_conn_t* mongo_sasl_context(VALUE self) {
@@ -104,6 +105,10 @@ static VALUE initialize_challenge(VALUE self) {
   }
 
   context = Data_Wrap_Struct(rb_cObject, NULL, mongo_sasl_conn_free, conn);
+  /* from now on context owns conn */
+  /* since mongo_sasl_conn_free cleans up conn, we should NOT call */
+  /* sasl_dispose any more in this function. */
+  RB_GC_GUARD(context);
   rb_iv_set(self, "@context", context);
 
   result = sasl_client_start(conn, mechanism_list, NULL, &raw_payload, &raw_payload_len, &mechanism_selected);
@@ -115,7 +120,9 @@ static VALUE initialize_challenge(VALUE self) {
     return Qfalse;
   }
 
-  result = sasl_encode64(raw_payload, raw_payload_len, encoded_payload, sizeof(encoded_payload), &encoded_payload_len);
+  /* I can't tell if the buffer size expected by sasl_encode64 includes */
+  /* the null terminator, thus be defensive and exclude it */
+  result = sasl_encode64(raw_payload, raw_payload_len, encoded_payload, sizeof(encoded_payload)-1, &encoded_payload_len);
   if (is_sasl_failure(result)) {
     return Qfalse;
   }
@@ -135,17 +142,17 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
   step_payload = RSTRING_PTR(rb_payload);
   step_payload_len = (int)RSTRING_LEN(rb_payload);
 
-  result = sasl_decode64(step_payload, step_payload_len, base_payload, sizeof(base_payload), &base_payload_len);
+  result = sasl_decode64(step_payload, step_payload_len, base_payload, sizeof(base_payload)-1, &base_payload_len);
   if (is_sasl_failure(result)) {
     return Qfalse;
   }
 
   result = sasl_client_step(conn, base_payload, base_payload_len, NULL, &out, &outlen);
   if (is_sasl_failure(result)) {
-  	return Qfalse;
+    return Qfalse;
   }
 
-  result = sasl_encode64(out, outlen, payload, sizeof(payload), &payload_len);
+  result = sasl_encode64(out, outlen, payload, sizeof(payload)-1, &payload_len);
   if (is_sasl_failure(result)) {
     return Qfalse;
   }
