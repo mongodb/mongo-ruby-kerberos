@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'rake'
 gemspec
+
+gem 'rake'
+gem 'yard'
 
 group :development, :test do
   gem 'rspec'
