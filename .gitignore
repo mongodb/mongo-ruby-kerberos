@@ -28,3 +28,4 @@ gem-private_key.pem
 *.config
 .ruby-version
 .ruby-gemset
+/lib/*.so
