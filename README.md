@@ -6,7 +6,7 @@ Provides Kerberos authentication support to the Mongo Ruby Driver.
 Compatibility
 -------------
 
-mongo_kerberos is tested against MRI (1.9.2+) and JRuby (9.1+).
+mongo_kerberos is tested against MRI (1.9.3+) and JRuby (9.1+).
 
 JRuby
 `````
