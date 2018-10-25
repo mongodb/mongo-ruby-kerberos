@@ -6,7 +6,15 @@ Provides Kerberos authentication support to the Mongo Ruby Driver.
 Compatibility
 -------------
 
-mongo_kerberos is tested against MRI (1.9.2+) and JRuby (1.7.0+)
+mongo_kerberos is tested against MRI (1.9.3+) and JRuby (9.1+).
+
+JRuby
+`````
+
+In order to work with Kerberos TGTs that are in the system cache (e.g. obtained with `kinit`), the
+JRuby extension sets the JVM system property "sun.security.jgss.native" to "true". Note that any
+other use of the JGSS library will also be affected by this setting, meaning that any TGTs in the
+system cache will be available for obtaining Kerberos credentials as well.
 
 Installation
 ------------
@@ -18,7 +26,7 @@ information.
 With bundler, add the `mongo_kerberos` gem to your `Gemfile`.
 
 ```ruby
-gem "mongo_kerberos", "~> 2.0"
+gem "mongo_kerberos", "~> 2.1"
 ```
 
 Require the `mongo_kerberos` gem in your application.
@@ -26,14 +34,6 @@ Require the `mongo_kerberos` gem in your application.
 ```ruby
 require "mongo_kerberos"
 ```
-
-Note about JRuby
------
-
-In order to work with Kerberos TGTs that are in the system cache (e.g. obtained with `kinit`), the
-JRuby extension sets the JVM system property "sun.security.jgss.native" to "true". Note that any
-other use of the JGSS library will also be affected by this setting, meaning that any TGTs in the
-system cache will be available for obtaining Kerberos credentials as well.
 
 
 API Documentation
@@ -45,4 +45,5 @@ located at rdoc.info.
 Versioning
 ----------
 
-As of 2.0.0, this project adheres to the [Semantic Versioning Specification](http://semver.org/).
+As of 2.1.0, this project adheres to the
+[Semantic Versioning Specification](http://semver.org/).

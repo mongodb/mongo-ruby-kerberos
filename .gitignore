@@ -1,3 +1,5 @@
+/.yardoc
+/yard-docs
 Gemfile.lock
 build/*
 *.swp
@@ -27,3 +29,4 @@ gem-private_key.pem
 *.config
 .ruby-version
 .ruby-gemset
+/lib/*.so
