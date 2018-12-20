@@ -116,8 +116,8 @@ static VALUE initialize_challenge(VALUE self) {
   /* from now on context owns conn */
   /* since mongo_sasl_conn_free cleans up conn, we should NOT call */
   /* sasl_dispose any more in this function. */
-  RB_GC_GUARD(context);
   rb_iv_set(self, "@context", context);
+  RB_GC_GUARD(context);
 
   result = sasl_client_start(conn, mechanism_list, NULL, &raw_payload, &raw_payload_len, &mechanism_selected);
   if (is_sasl_failure(result)) {
@@ -128,8 +128,8 @@ static VALUE initialize_challenge(VALUE self) {
     return Qfalse;
   }
 
-  /* I can't tell if the buffer size expected by sasl_encode64 includes */
-  /* the null terminator, thus be defensive and exclude it */
+  /* cyrus-sasl considers `outmax` (fourth argument) to include the null */
+  /* terminator, but this is not documented. Be defensive and exclude it. */
   result = sasl_encode64(raw_payload, raw_payload_len, encoded_payload, sizeof(encoded_payload)-1, &encoded_payload_len);
   if (is_sasl_failure(result)) {
     return Qfalse;
