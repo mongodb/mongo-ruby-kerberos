@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage          = 'http://www.mongodb.org'
   s.summary           = 'Kerberos authentication support for the MongoDB Ruby driver'
   s.description       = 'Adds Kerberos authentication via libsasl to the MongoDB Ruby Driver on MRI and JRuby'
-  s.license           = 'Apache License Version 2.0'
+  s.license           = 'Apache-2.0'
 
   if File.exists?('gem-private_key.pem')
     s.signing_key = 'gem-private_key.pem'
