@@ -4,14 +4,22 @@ require 'mongo/auth/kerberos/version'
 
 Gem::Specification.new do |s|
   s.name              = 'mongo_kerberos'
-  s.rubyforge_project = 'mongo_kerberos'
   s.version           = Mongo::Auth::Kerberos::VERSION.dup
   s.authors           = ['Emily Stolfo', 'Durran Jordan']
   s.email             = ['mongodb-dev@googlegroups.com']
-  s.homepage          = 'http://www.mongodb.org'
+  s.homepage          = 'https://docs.mongodb.com/ruby-driver/current/tutorials/ruby-driver-authentication/#kerberos-gssapi-mechanism'
   s.summary           = 'Kerberos authentication support for the MongoDB Ruby driver'
   s.description       = 'Adds Kerberos authentication via libsasl to the MongoDB Ruby Driver on MRI and JRuby'
   s.license           = 'Apache-2.0'
+
+  s.metadata = {
+    'bug_tracker_uri' => 'https://jira.mongodb.org/projects/RUBY',
+    'changelog_uri' => 'https://github.com/mongodb/mongo-ruby-kerberos/releases',
+    'documentation_uri' => 'https://docs.mongodb.com/ruby-driver/current/tutorials/ruby-driver-authentication/#kerberos-gssapi-mechanism',
+    'homepage_uri' => 'https://docs.mongodb.com/ruby-driver/current/tutorials/ruby-driver-authentication/#kerberos-gssapi-mechanism',
+    'mailing_list_uri' => 'https://groups.google.com/group/mongodb-user',
+    'source_code_uri' => 'https://github.com/mongodb/mongo-ruby-kerberos'
+  }
 
   if File.exists?('gem-private_key.pem')
     s.signing_key = 'gem-private_key.pem'
