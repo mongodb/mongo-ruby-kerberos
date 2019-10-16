@@ -36,8 +36,11 @@ require "mongo_kerberos"
 
 ## API Documentation
 
-The [API Documentation](http://rdoc.info/github/mongodb/mongo-ruby-kerberos/master/frames) is
-located at rdoc.info.
+Please see the [Kerberos authentication section](https://docs.mongodb.com/ruby-driver/current/tutorials/ruby-driver-authentication/#kerberos-gssapi-mechanism)
+of the Ruby driver documentation for high level documentation of this library.
+
+The [API documentation](https://api.mongodb.com/ruby-kerberos/current/) is
+located at api.mongodb.com.
 
 ## Versioning
 
