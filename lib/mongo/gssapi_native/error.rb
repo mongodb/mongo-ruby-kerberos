@@ -1,4 +1,4 @@
-# Copyright (C) 2014-2020 MongoDB, Inc.
+# Copyright (C) 2020 MongoDB, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,15 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'forwardable'
-require 'mongo/gssapi_native/error'
-require 'mongo'
-require 'mongo/auth/kerberos'
-
-# Add the Kerberos authentication mechanism.
-#
-# @since 2.0.0
-Mongo::Auth::SOURCES[:gssapi] = Mongo::Auth::Kerberos
-
-# @note Prevent any further modifications.
-Mongo::Auth::SOURCES.freeze
+module Mongo
+  module GssapiNative
+    # Class for GSSAPI-related exceptions.
+    class Error < StandardError
+    end
+  end
+end
