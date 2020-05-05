@@ -39,7 +39,8 @@ describe cls do
       it 'raises an exception' do
         lambda do
           challenge
-        end.should raise_error(Mongo::GssapiNative::Error, /sasl_client_start failed.*generic failure/)
+        # The precise error can vary depending on system configuration
+        end.should raise_error(Mongo::GssapiNative::Error, /sasl_client_start failed/)
       end
     end
   end
