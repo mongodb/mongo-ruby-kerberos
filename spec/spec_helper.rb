@@ -28,3 +28,10 @@ require "mongo_kerberos"
 require "rspec"
 
 # Dir["./spec/support/**/*.rb"].each { |file| require file }
+
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+    c.max_formatted_output_length = 10000
+  end
+end

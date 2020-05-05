@@ -1,4 +1,4 @@
-// Copyright (C) 2014 MongoDB, Inc.
+// Copyright (C) 2014-2020 MongoDB, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,6 +15,16 @@
 #include <ruby.h>
 #include <sasl/sasl.h>
 #include <sasl/saslutil.h>
+
+static VALUE gssapi_error_cls() {
+  VALUE mongo = rb_const_get(rb_cObject, rb_intern("Mongo"));
+  VALUE gssapi = rb_const_get(mongo, rb_intern("GssapiNative"));
+  return rb_const_get(gssapi, rb_intern("Error"));
+}
+
+static void raise_gssapi_error(const char *msg, int result) {
+  rb_raise(gssapi_error_cls(), "%s (code %d: %s)", msg, result, sasl_errstring(result, NULL, NULL));
+}
 
 static void mongo_sasl_conn_free(void* data) {
   sasl_conn_t *conn = (sasl_conn_t*) data;
@@ -38,17 +48,11 @@ static sasl_conn_t* mongo_sasl_context(VALUE self) {
 
 static VALUE a_init(VALUE self, VALUE user_name, VALUE host_name, VALUE service_name, VALUE canonicalize_host_name)
 {
-  if (sasl_client_init(NULL) == SASL_OK) {
-    rb_iv_set(self, "@valid", Qtrue);
-    rb_iv_set(self, "@user_name", user_name);
-    rb_iv_set(self, "@host_name", host_name);
-    rb_iv_set(self, "@service_name", service_name);
-    rb_iv_set(self, "@canonicalize_host_name", canonicalize_host_name);
-  }
-
-  else {
-    rb_iv_set(self, "@valid", Qfalse);
-  }
+  rb_iv_set(self, "@valid", Qtrue);
+  rb_iv_set(self, "@user_name", user_name);
+  rb_iv_set(self, "@host_name", host_name);
+  rb_iv_set(self, "@service_name", service_name);
+  rb_iv_set(self, "@canonicalize_host_name", canonicalize_host_name);
 
   return self;
 }
@@ -90,7 +94,7 @@ static VALUE initialize_challenge(VALUE self) {
   const char *raw_payload;
   unsigned int raw_payload_len, encoded_payload_len;
   const char *mechanism_list = "GSSAPI";
-  const char *mechanism_selected = "GSSAPI";
+  const char *mechanism_selected;
   VALUE context;
   sasl_conn_t *conn;
   sasl_callback_t client_interact [] = {
@@ -105,8 +109,7 @@ static VALUE initialize_challenge(VALUE self) {
   result = sasl_client_new(servicename, hostname, NULL, NULL, client_interact, 0, &conn);
 
   if (result != SASL_OK) {
-    sasl_dispose(&conn);
-    return Qfalse;
+    raise_gssapi_error("sasl_client_new failed", result);
   }
 
   context = Data_Wrap_Struct(rb_cObject, NULL, mongo_sasl_conn_free, conn);
@@ -121,18 +124,25 @@ static VALUE initialize_challenge(VALUE self) {
 
   result = sasl_client_start(conn, mechanism_list, NULL, &raw_payload, &raw_payload_len, &mechanism_selected);
   if (is_sasl_failure(result)) {
-    return Qfalse;
+    raise_gssapi_error("sasl_client_start failed", result);
+  }
+  if (strcmp(mechanism_selected, "GSSAPI") != 0) {
+    rb_raise(gssapi_error_cls(), "sasl_client_start selected an unexpected mechanism: %s", mechanism_selected);
   }
 
   if (result != SASL_CONTINUE) {
-    return Qfalse;
+    raise_gssapi_error("sasl_client_start did not return SASL_CONTINUE", result);
   }
 
   /* cyrus-sasl considers `outmax` (fourth argument) to include the null */
   /* terminator, but this is not documented. Be defensive and exclude it. */
   result = sasl_encode64(raw_payload, raw_payload_len, encoded_payload, sizeof(encoded_payload)-1, &encoded_payload_len);
   if (is_sasl_failure(result)) {
-    return Qfalse;
+    raise_gssapi_error("sasl_encode64 failed to encode the payload", result);
+  }
+  if (encoded_payload_len >= sizeof(encoded_payload)) {
+    /* Should never happen */
+    rb_raise(gssapi_error_cls(), "sasl_encode64 claimed to write %u bytes when up to %lu bytes were allowed", encoded_payload_len, sizeof(encoded_payload));
   }
 
   encoded_payload[encoded_payload_len] = 0;
@@ -152,17 +162,17 @@ static VALUE evaluate_challenge(VALUE self, VALUE rb_payload) {
 
   result = sasl_decode64(step_payload, step_payload_len, base_payload, sizeof(base_payload)-1, &base_payload_len);
   if (is_sasl_failure(result)) {
-    return Qfalse;
+    raise_gssapi_error("sasl_decode64 failed to decode the payload", result);
   }
 
   result = sasl_client_step(conn, base_payload, base_payload_len, NULL, &out, &outlen);
   if (is_sasl_failure(result)) {
-    return Qfalse;
+    raise_gssapi_error("sasl_client_step failed", result);
   }
 
   result = sasl_encode64(out, outlen, payload, sizeof(payload)-1, &payload_len);
   if (is_sasl_failure(result)) {
-    return Qfalse;
+    raise_gssapi_error("sasl_encode64 failed to encode the payload", result);
   }
 
   return rb_str_new(payload, payload_len);
@@ -172,11 +182,20 @@ VALUE c_GSSAPI_authenticator;
 
 void Init_mongo_kerberos_native() {
   VALUE mongo, auth;
+  int result;
+  
+  result = sasl_client_init(NULL);
+  if (result != SASL_OK) {
+    rb_raise(rb_eLoadError, "Failed to initialize libsasl2: sasl_client_init failed (code %d: %s)", result, sasl_errstring(result, NULL, NULL));
+  }
+  
   mongo = rb_const_get(rb_cObject, rb_intern("Mongo"));
   auth = rb_const_get(mongo, rb_intern("Auth"));
   c_GSSAPI_authenticator = rb_define_class_under(auth, "GSSAPIAuthenticator", rb_cObject);
   rb_define_method(c_GSSAPI_authenticator, "initialize", a_init, 4);
   rb_define_method(c_GSSAPI_authenticator, "initialize_challenge", initialize_challenge, 0);
   rb_define_method(c_GSSAPI_authenticator, "evaluate_challenge", evaluate_challenge, 1);
+  
+  /* Deprecated */
   rb_define_method(rb_cObject, "valid?", valid, 0);
 }
