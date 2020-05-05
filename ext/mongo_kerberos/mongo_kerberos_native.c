@@ -190,8 +190,8 @@ void Init_mongo_kerberos_native() {
   }
   
   mongo = rb_const_get(rb_cObject, rb_intern("Mongo"));
-  auth = rb_const_get(mongo, rb_intern("Auth"));
-  c_GSSAPI_authenticator = rb_define_class_under(auth, "GSSAPIAuthenticator", rb_cObject);
+  auth = rb_const_get(mongo, rb_intern("GssapiNative"));
+  c_GSSAPI_authenticator = rb_define_class_under(auth, "Authenticator", rb_cObject);
   rb_define_method(c_GSSAPI_authenticator, "initialize", a_init, 4);
   rb_define_method(c_GSSAPI_authenticator, "initialize_challenge", initialize_challenge, 0);
   rb_define_method(c_GSSAPI_authenticator, "evaluate_challenge", evaluate_challenge, 1);

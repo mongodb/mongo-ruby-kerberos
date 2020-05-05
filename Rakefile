@@ -41,7 +41,7 @@ else
   end
 end
 
-require "mongo/auth/kerberos/version"
+require "mongo/gssapi_native/version"
 
 def extension
   RUBY_PLATFORM =~ /darwin/ ? "bundle" : "so"

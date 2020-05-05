@@ -12,15 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'forwardable'
+require 'mongo/gssapi_native/version'
 require 'mongo/gssapi_native/error'
-require 'mongo'
-require 'mongo/auth/kerberos'
 
-# Add the Kerberos authentication mechanism.
-#
-# @since 2.0.0
-Mongo::Auth::SOURCES[:gssapi] = Mongo::Auth::Kerberos
-
-# @note Prevent any further modifications.
-Mongo::Auth::SOURCES.freeze
+if defined?(JRUBY_VERSION)
+  require 'mongo/auth/kerberos/jruby/authenticator'
+else
+  require 'mongo_kerberos_native'
+end

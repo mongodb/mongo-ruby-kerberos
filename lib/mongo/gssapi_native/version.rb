@@ -13,11 +13,9 @@
 # limitations under the License.
 
 module Mongo
-  module Auth
-    class Kerberos
+  module GssapiNative
 
-      # The gem version number.
-      VERSION = '2.1.0'.freeze
-    end
+    # The gem version number.
+    VERSION = '3.0.0.alpha'.freeze
   end
 end
