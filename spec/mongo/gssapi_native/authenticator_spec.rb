@@ -1,13 +1,29 @@
 require 'spec_helper'
 
-describe Mongo::Auth::GSSAPIAuthenticator do
+cls = if defined?(JRUBY_VERSION)
+  org.mongodb.sasl.GSSAPIAuthenticator
+else
+  Mongo::Auth::GSSAPIAuthenticator
+end
+
+describe cls do
   let(:authenticator) do
-    described_class.new(
-      'test-user',
-      'test.host',
-      'service-name',
-      false,
-    )
+    if defined?(JRUBY_VERSION)
+      described_class.new(
+        JRuby.runtime,
+        'test-user',
+        'test.host',
+        'service-name',
+        false,
+      )
+    else
+      described_class.new(
+        'test-user',
+        'test.host',
+        'service-name',
+        false,
+      )
+    end
   end
 
   describe '#initialize' do
