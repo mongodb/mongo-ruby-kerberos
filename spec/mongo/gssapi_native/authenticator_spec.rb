@@ -3,7 +3,7 @@ require 'spec_helper'
 cls = if defined?(JRUBY_VERSION)
   org.mongodb.sasl.GSSAPIAuthenticator
 else
-  Mongo::Auth::GSSAPIAuthenticator
+  Mongo::GssapiNative::Authenticator
 end
 
 describe cls do

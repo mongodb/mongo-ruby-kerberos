@@ -1,10 +1,10 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mongo/auth/kerberos/version'
+require 'mongo/gssapi_native/version'
 
 Gem::Specification.new do |s|
   s.name              = 'mongo_kerberos'
-  s.version           = Mongo::Auth::Kerberos::VERSION.dup
+  s.version           = Mongo::GssapiNative::VERSION.dup
   s.authors           = ['Emily Stolfo', 'Durran Jordan']
   s.email             = ['mongodb-dev@googlegroups.com']
   s.homepage          = 'https://docs.mongodb.com/ruby-driver/current/tutorials/ruby-driver-authentication/#kerberos-gssapi-mechanism'
