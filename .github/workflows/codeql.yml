@@ -53,7 +53,7 @@ jobs:
     - name: Install libsasl
       if: matrix.build-mode == 'manual'
       shell: bash
-      run: sudo apt -y install libsasl2-2
+      run: sudo apt-get -y install libsasl2-dev
 
     - name: Manually build the native code
       if: matrix.build-mode == 'manual'

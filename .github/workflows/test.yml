@@ -34,7 +34,7 @@ jobs:
 
       - name: Install libsasl
         shell: bash
-        run: sudo apt -y install libsasl2-2
+        run: sudo apt-get -y install libsasl2-dev
 
       - name: Run the tests
         timeout-minutes: 10
