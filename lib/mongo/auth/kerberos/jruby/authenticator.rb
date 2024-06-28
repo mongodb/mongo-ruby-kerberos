@@ -14,6 +14,7 @@
 
 require 'java'
 require 'mongo/auth/kerberos/native.jar'
+require 'forwardable'
 
 module Mongo
   module Auth
