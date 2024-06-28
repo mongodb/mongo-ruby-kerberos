@@ -50,10 +50,15 @@ jobs:
         ruby-version: '3.2'
         bundler-cache: true
 
+    - name: Install libsasl
+      if: matrix.build-mode == 'manual'
+      shell: bash
+      run: sudo apt -y install libsasl2-2
+
     - name: Manually build the native code
       if: matrix.build-mode == 'manual'
-      run: |
-        bundle exec rake compile
+      shell: bash
+      run: bundle exec rake compile
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3

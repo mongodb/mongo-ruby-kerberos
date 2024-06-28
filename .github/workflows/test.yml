@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: >-
-      ${{ matrix.os }} ${{ matrix.ruby }}
+      ruby:${{ matrix.ruby }}
     env:
       CI: true
       TESTOPTS: -v
@@ -32,6 +32,11 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
+      - name: Install libsasl
+        shell: bash
+        run: sudo apt -y install libsasl2-2
+
       - name: Run the tests
         timeout-minutes: 10
+        shell: bash
         run: bundle exec rake spec
