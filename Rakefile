@@ -43,12 +43,12 @@ end
 
 desc "[INTERNAL] Loads the library's version"
 task :load_version do
-  require "mongo/gssapi_native/version"
+  require 'mongo/auth/kerberos/version'
 end
 
 desc 'Print the current version (used for releases)'
 task version: :load_version do
-  puts Mongo::GssapiNative::VERSION
+  puts Mongo::Auth::Kerberos::VERSION
 end
 
 RSpec::Core::RakeTask.new(:rspec)
@@ -67,7 +67,7 @@ end
 # name of the gem file to generate.
 desc 'Print the name of the gem file to generate.'
 task gem_file_name: :load_version do
-  base = "mongo_kerberos-#{Mongo::GssapiNative::VERSION}"
+  base = "mongo_kerberos-#{Mongo::Auth::Kerberos::VERSION}"
   base << '-java' if jruby?
   puts "#{base}.gem"
 end
@@ -130,8 +130,8 @@ task :docs => 'docs:yard'
 namespace :docs do
   desc "Generate yard documention"
   task yard: :load_version do
-    out = File.join('yard-docs', Mongo::GssapiNative::VERSION)
+    out = File.join('yard-docs', Mongo::Auth::Kerberos::VERSION)
     FileUtils.rm_rf(out)
-    system "yardoc -o #{out} --title mongo-ruby-kerberos-#{Mongo::GssapiNative::VERSION}"
+    system "yardoc -o #{out} --title mongo-ruby-kerberos-#{Mongo::Auth::Kerberos::VERSION}"
   end
 end
