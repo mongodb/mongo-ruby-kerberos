@@ -31,6 +31,7 @@ if jruby?
     ext.name = "native"
     ext.ext_dir = "src"
     ext.lib_dir = "lib/mongo/auth/kerberos"
+    ext.release = ENV['JAVA_RELEASE'].to_i if ENV['JAVA_RELEASE']
   end
 else
   require "rake/extensiontask"

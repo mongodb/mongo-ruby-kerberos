@@ -57,12 +57,8 @@ describe Mongo::Auth::Kerberos::Conversation do
       expect(selector[:mechanism]).to eq('GSSAPI')
     end
 
-    it 'sets the payload', unless: BSON::Environment.jruby? do
+    it 'sets the payload' do
       expect(selector[:payload]).to start_with('test')
-    end
-
-    it 'sets the payload', if: BSON::Environment.jruby? do
-      expect(selector[:payload].data).to start_with('test')
     end
   end
 
@@ -72,8 +68,10 @@ describe Mongo::Auth::Kerberos::Conversation do
       Mongo::Protocol::Reply.new
     end
 
+    let(:continue_token_contents) { 'testing' }
+
     let(:continue_token) do
-      BSON::Environment.jruby? ? BSON::Binary.new('testing') : 'testing'
+      continue_token_contents
     end
 
     context 'when the conversation is a success' do
@@ -82,7 +80,7 @@ describe Mongo::Auth::Kerberos::Conversation do
         [{
           'conversationId' => 1,
           'done' => false,
-          'payload' => continue_token,
+          'payload' => continue_token_contents,
           'ok' => 1.0
         }]
       end
@@ -97,7 +95,7 @@ describe Mongo::Auth::Kerberos::Conversation do
 
       before do
         expect(authenticator).to receive(:evaluate_challenge).
-          with('testing').and_return(continue_token)
+          with(continue_token_contents).and_return(continue_token_contents)
         reply.instance_variable_set(:@documents, documents)
       end
 
@@ -105,12 +103,8 @@ describe Mongo::Auth::Kerberos::Conversation do
         expect(selector[:conversationId]).to eq(1)
       end
 
-      it 'sets the payload', unless: BSON::Environment.jruby? do
+      it 'sets the payload' do
         expect(selector[:payload]).to eq(continue_token)
-      end
-
-      it 'sets the payload', if: BSON::Environment.jruby? do
-        expect(selector[:payload].data).to eq(continue_token)
       end
 
       it 'sets the continue flag' do
