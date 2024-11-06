@@ -13,7 +13,9 @@
 # limitations under the License.
 
 require 'java'
+require 'jruby'
 require 'mongo/auth/kerberos/native.jar'
+require 'forwardable'
 
 module Mongo
   module Auth
