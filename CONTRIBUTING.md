@@ -21,8 +21,6 @@ specs should follow the following guidelines:
 - Use `context` blocks to set up conditions.
 - Always provide descriptive specifications via `it`.
 
-Specs can be automatically run with Guard, via `bundle exec guard`
-
 Before commiting, run `rake` to ensure all specs pass with both pure Ruby and
 the native extensions.
 
